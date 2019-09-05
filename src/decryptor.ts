@@ -1,4 +1,5 @@
 import { padding } from 'aes-js';
+import * as filenameReservedRegex from 'filename-reserved-regex';
 import * as fs from 'fs';
 import * as util from 'util';
 import { initializationVector, key } from './constants';
@@ -18,11 +19,14 @@ class Decryptor {
     const bytes = new Uint8Array(this.file.buffer);
     const encodedBytes = getModeOfOperation(mode, key, initializationVector)!.decrypt(bytes);
     const stripped = padding.pkcs7.strip(encodedBytes);
+    const name = this.file.filename;
 
-    writeFile('./newFile.txt', stripped)
-      .then(() => {
-        console.log('File created successfully');
-      });
+    if (filenameReservedRegex().test(name)) {
+      writeFile(`../output/${name}`, stripped)
+        .then(() => {
+          console.log('File created successfully');
+        });
+    }
   }
 }
 
