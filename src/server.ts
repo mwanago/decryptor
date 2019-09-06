@@ -1,7 +1,11 @@
 import * as cors from 'cors';
+import 'dotenv/config';
 import * as express from 'express';
 import * as multer from 'multer';
 import Decryptor from './decryptor';
+import generateRSA from './generateRSA';
+
+generateRSA();
 
 const app = express();
 const upload = multer();
