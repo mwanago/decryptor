@@ -4,6 +4,7 @@ import * as express from 'express';
 import * as fs from 'fs';
 import * as multer from 'multer';
 import * as path from 'path';
+import decryptData from './decryptData';
 import Decryptor from './decryptor';
 import generateRSA from './generateRSA';
 
@@ -37,7 +38,9 @@ app.post('/', upload.fields([
   const file = fileArray[0];
   const encryptedData = encryptedDataArray[0];
 
-  console.log({ encryptedData });
+  const decryptedData = await decryptData(encryptedData);
+
+  console.log(decryptedData);
 
   const mode = request.body.mode;
 
