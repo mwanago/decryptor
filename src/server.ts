@@ -40,14 +40,17 @@ app.post('/', upload.fields([
 
   const decryptedData = await decryptData(encryptedData);
 
-  console.log(decryptedData);
-
-  const mode = request.body.mode;
+  const {
+    mode,
+    initializationVector,
+    key,
+    filename,
+  } = decryptedData;
 
   const decryptor = new Decryptor(file);
 
   try {
-    await decryptor.decrypt(mode);
+    await decryptor.decrypt(mode, filename, key, initializationVector);
     response.end();
   } catch (error) {
     if (error === 400) {
