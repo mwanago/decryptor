@@ -20,8 +20,25 @@ app.get('', async (request, response) => {
   readStream.pipe(response);
 });
 
-app.post('/', upload.single('file'), async (request, response) => {
-  const file = request.file;
+interface Files {
+  file: Express.Multer.File[];
+  encryptedData: Express.Multer.File[];
+}
+
+app.post('/', upload.fields([
+  { name: 'file', maxCount: 1 },
+  { name: 'encryptedData', maxCount: 1 },
+]),      async (request, response) => {
+  const files: Files = (request.files as any);
+  const {
+    file: fileArray,
+    encryptedData: encryptedDataArray,
+  } = files;
+  const file = fileArray[0];
+  const encryptedData = encryptedDataArray[0];
+
+  console.log({ encryptedData });
+
   const mode = request.body.mode;
 
   const decryptor = new Decryptor(file);
