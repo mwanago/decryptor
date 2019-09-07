@@ -1,8 +1,13 @@
-import * as passwordValidator from 'password-validator';
+import * as PasswordValidator from 'password-validator';
 
 export default function validatePassword() {
   const password = process.env.PASSWORD;
-  const schema = new passwordValidator();
+
+  if (!password) {
+    throw new Error('Password missing!');
+  }
+
+  const schema = new PasswordValidator();
 
   schema
     .is().min(8)
