@@ -3,6 +3,7 @@ import * as filenameReservedRegex from 'filename-reserved-regex';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
+import generateRandomFile from './generateRandomFile';
 import getModeOfOperation from './getModeOfOperation';
 import Modes from './modes.enum';
 

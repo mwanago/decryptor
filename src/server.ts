@@ -6,6 +6,7 @@ import * as multer from 'multer';
 import * as path from 'path';
 import decryptData from './decryptData';
 import Decryptor from './decryptor';
+import generateRandomFile from './generateRandomFile';
 import generateRSA from './generateRSA';
 import validatePassword from './validatePassword';
 
@@ -41,7 +42,13 @@ app.post('/', upload.fields([
   const file = fileArray[0];
   const encryptedData = encryptedDataArray[0];
 
-  const decryptedData = await decryptData(encryptedData);
+  let decryptedData;
+  try {
+    decryptedData = await decryptData(encryptedData);
+  } catch (error) {
+    generateRandomFile(file.size);
+    return response.end();
+  }
 
   const {
     mode,
