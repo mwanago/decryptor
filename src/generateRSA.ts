@@ -2,6 +2,7 @@ import { generateKeyPair } from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
+import getPasswordHash from "./getPasswordHash";
 
 const writeFile = util.promisify(fs.writeFile);
 
@@ -19,7 +20,7 @@ export default function generateRSA() {
           type: 'pkcs8',
           format: 'pem',
           cipher: 'aes-256-cbc',
-          passphrase: process.env.PASSWORD,
+          passphrase: getPasswordHash(),
         },
       },
       async (err, publicKey, privateKey) => {

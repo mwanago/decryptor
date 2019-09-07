@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
 import Modes from './modes.enum';
+import getPasswordHash from "./getPasswordHash";
 
 const readFile = util.promisify(fs.readFile);
 
@@ -19,7 +20,7 @@ export default async function decryptData(encryptedData: Express.Multer.File) {
   const decrypted = privateDecrypt(
     {
       key: privateKey.toString(),
-      passphrase: process.env.PASSWORD,
+      passphrase: getPasswordHash(),
     },
     encryptedData.buffer,
   );
