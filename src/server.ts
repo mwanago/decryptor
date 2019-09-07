@@ -7,6 +7,9 @@ import * as path from 'path';
 import decryptData from './decryptData';
 import Decryptor from './decryptor';
 import generateRSA from './generateRSA';
+import validatePassword from './validatePassword';
+
+validatePassword();
 
 const generatingPromise = generateRSA();
 
